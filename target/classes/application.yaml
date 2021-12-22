@@ -7,5 +7,14 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+       ddl-auto: update
+  flyway:
+     url: jdbc:h2:mem:mydb
+     baseline-on-migrate: true
+     user: sa
+     password: password
+     #location: classpath:db/migration/mysql
+    
   h2:
     console.enabled: true
