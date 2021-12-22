@@ -7,6 +7,6 @@ import com.caa.entities.Task;
 
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Integer>{
-
+ 
 }
 
