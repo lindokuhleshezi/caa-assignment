@@ -7,5 +7,5 @@ import com.caa.entities.User;
 
 @Repository
 public interface UsersRepo extends JpaRepository<User, Integer>{
-	public User findbyUserName(String username);
+	public User findByUsername(String username);
 }

@@ -25,7 +25,7 @@ public class UserServiceImp implements UserService {
 		Optional<User> user_ = this.userRepo.findById(id);
 		if(!user_.isPresent()) {
 			throw new Exception("user not found with the given id");
-		}else if(this.userRepo.findbyUserName(user.getUsername())!= null) {
+		}else if(this.userRepo.findByUsername(user.getUsername())!= null) {
 			throw new Exception("user cannot be update with the given username, username already exist");
 		}
 		user_.get().setFirst_name(user.getFirst_name());
@@ -41,8 +41,12 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public User findById(int id) {
-		return this.userRepo.findById(id).get();
+	public User findById(int id) throws Exception {
+		Optional<User> user = this.userRepo.findById(id);
+		if(!user.isPresent()) {
+			throw new Exception("user not found with the given id");
+		}
+		return user.get();
 	}
 
 }

@@ -12,5 +12,5 @@ public interface UserService {
 	
 	User create(User user);
 	
-	User findById(int id);
+	User findById(int id) throws Exception;
 }

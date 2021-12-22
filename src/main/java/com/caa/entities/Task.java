@@ -15,20 +15,28 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name="task")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 	private String name;
 	private String description;
 	private Date date_time; 
+	
 	@NotNull
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity = User.class)
 	@JoinTable(name = "user_tasks")
-	private Set<User> user_id;
+	private Set<User> user;
 }
