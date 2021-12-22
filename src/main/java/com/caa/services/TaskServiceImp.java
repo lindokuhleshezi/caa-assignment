@@ -38,26 +38,40 @@ public class TaskServiceImp implements TaskService{
 	}
 
 	@Override
-	public boolean deleteTask(int id) {
-		this.taskRepo.deleteById(id);
-		if(this.taskRepo.findById(id).isPresent()) {
-			return false;
+	public String deleteTask(int user_id,int task_id) {
+		Optional<Task> task = this.taskRepo.findById(task_id);
+		if(task.isPresent() && task.get().getUser_id() == user_id) {
+			this.taskRepo.delete(task.get());
+			if(!this.taskRepo.findById(task_id).isPresent()) {
+				return "Deleted";
+			}			
 		}
-		return true;
+		return "Not Deleted";
 	}
 
 	@Override
 	public Task updateTask(Task task, int user_id,int task_id) throws Exception{
+		System.out.println("task id "+task_id);
 		Optional<Task> task_ = this.taskRepo.findById(task_id);
 		if(!task_.isPresent()) {
 			throw new Exception("task not found with the given id");
 		}
 		task_.get().setDate_time(task.getDate_time());;
 		task_.get().setDescription(task.getDescription());;
-		task_.get().setName(task.getName());		
-		task_.get().setUser_id(this.userService.findById(user_id).getId());
+		task_.get().setName(task.getName());
+		task.setId(task_id);
+		try {
+			User user = this.userService.findById(user_id);
+			
+			if(user != null) {
+				task.setUser_id(user_id);
+				task = this.taskRepo.save(task);
+			}
+		} catch (Exception e) {
+			System.out.println("user not found with the given id ,task is not updated");
+		}
 		
-		return this.taskRepo.save(task_.get());
+		return task;
 	}
 
 	@Override
