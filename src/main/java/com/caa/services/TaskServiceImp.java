@@ -75,14 +75,13 @@ public class TaskServiceImp implements TaskService{
 	}
 
 	@Override
-	public List<Task> getAllTask() {
-		return this.taskRepo.findAll();
+	public List<Task> getAllTask(int user_id) {
+		return this.taskRepo.findByallByIdAndUser_id(user_id);
 	}
 
 	@Override
 	public Task findByInfo(int user_id, int task_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.taskRepo.findByUser_idAndId(user_id, task_id);
 	}
 	
 	
